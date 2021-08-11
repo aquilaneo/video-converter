@@ -14,9 +14,9 @@ def convert_directory(dirPath, src, dest, bitrate_coef):
     for file in files:
         newName = file.replace("." + src, "." + dest)
         info = get_info(file)
-
-        encode(file, newName, info["bitrate"] * bitrate_coef)
-        os.remove(file)
+        if info["codec"] != "h265" and info["codec"] != "hevc":
+            encode(file, newName, info["bitrate"] * bitrate_coef)
+            os.remove(file)
     
     # サブフォルダも再帰的に変換
     for directory in directories:
